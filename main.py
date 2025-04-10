@@ -11,7 +11,6 @@ def upload_data():
     save_aws(data_proc, is_processed=True, **metadata)
 
 
-
 # Full pipeline
 def main():
     pass
@@ -19,4 +18,5 @@ def main():
 
 if __name__ == '__main__':
     load_dotenv()
+    load_aws_clients()
     main()

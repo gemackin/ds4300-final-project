@@ -23,4 +23,4 @@ def initialize_rds():
 def write_rds(metadata):
     columns = ', '.join(map(str, metadata.keys()))
     values = ', '.join(map(str, metadata.values()))
-    run_sql(f'INSERT INTO {TABLE_NAME} ({columns}) VALUES ({values})')
+    RDS.execute_sql(f'INSERT INTO {TABLE_NAME} ({columns}) VALUES ({values})')

@@ -13,4 +13,4 @@ def process(data):
     # Assuming bytes data (remove this line if already array)
     data = np.array(Image.open(io.BytesIO(data)))
     for i, color in enumerate(('red', 'green', 'blue')):
-        yield np.dstack([data[..., i]] * 3)
+        yield np.dstack([data[..., i]] * 3), {'color': color}

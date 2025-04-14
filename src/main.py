@@ -9,8 +9,8 @@ def upload_data(data_raw, metadata):
     data_preproc = preprocess(data_raw)
     write_aws(data_preproc, is_processed=False, **metadata)
     # The following two lines are probably going to be a lambda?
-    data_proc = process(data_preproc)
-    write_aws(data_proc, is_processed=True, **metadata)
+    for data_proc, additional_metadata in process(data_preproc):
+        write_aws(data_proc, is_processed=True, **metadata, **additional_metadata)
 
 
 # Full pipeline

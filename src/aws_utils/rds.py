@@ -9,17 +9,13 @@ def load_rds():
         'aws_secret_access_key': os.env['AWS_SECRET_ACCESS_KEY_ID'],
         'region_name': os.env['REGION_NAME']
     }
-    RDS = boto3.client('rds', **AWS_KEYWORDS)
+    RDS = boto3.client('rds-data', **AWS_KEYWORDS)
+    DATABASE_NAME = os.env['RDS_DATABASE_NAME']
     TABLE_NAME = os.env['RDS_TABLE_NAME']
 
 
 # Initial steps to setting up the RDS database
 def initialize_rds():
-    pass
-
-
-# Runs an SQL query on the RDS database
-def run_sql(sql):
     pass
 
 

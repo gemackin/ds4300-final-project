@@ -16,28 +16,29 @@ def load_rds():
 
 # Initial steps to setting up the RDS database
 def initialize_rds():
-    load_rds()  # Ensure RDS and TABLE_NAME are loaded
-    
-    create_table_sql = f"""
+    load_rds() # Ensure RDS and TABLE_NAME are loaded
+    execute_sql(f"""
     CREATE TABLE IF NOT EXISTS {TABLE_NAME} (
         id INT AUTO_INCREMENT PRIMARY KEY,
         filename VARCHAR(255),
         version VARCHAR(50),
         description TEXT
     );
-    """
-    
-    response = RDS.execute_statement(
-        resourceArn=os.environ['RDS_RESOURCE_ARN'],
-        secretArn=os.environ['RDS_SECRET_ARN'],
-        database=os.environ['RDS_DATABASE_NAME'],
-        sql=create_table_sql
-    )
-    
+    """)
 
+
+def execute_sql(sql):
+    return RDS.execute_sql(sql)
+    # response = RDS.execute_statement(
+    #     resourceArn=os.environ['RDS_RESOURCE_ARN'],
+    #     secretArn=os.environ['RDS_SECRET_ARN'],
+    #     database=os.environ['RDS_DATABASE_NAME'],
+    #     sql=create_table_sql
+    # )
+    
 
 # Saves metadata to an RDS database
 def write_rds(metadata):
     columns = ', '.join(map(str, metadata.keys()))
     values = ', '.join(map(str, metadata.values()))
-    RDS.execute_sql(f'INSERT INTO {TABLE_NAME} ({columns}) VALUES ({values})')
+    execute_sql(f'INSERT INTO {TABLE_NAME} ({columns}) VALUES ({values})')

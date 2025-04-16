@@ -14,7 +14,7 @@ def load_s3():
 
 # Initial steps to setting up the S3 bucket
 def initialize_s3():
-    pass
+    load_s3()
 
 
 # Loads data from an S3 bucket

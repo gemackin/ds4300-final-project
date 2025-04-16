@@ -12,9 +12,9 @@ def preprocess(data):
 
 
 # Processes preprocessed data for storage
-# This probably being hosted on a lambda?
 def process(data):
     # Assuming bytes data (remove this line if already array)
     data = np.array(Image.open(io.BytesIO(data)))
     for i, color in enumerate(('red', 'green', 'blue')):
-        yield np.dstack([data[..., i]] * 3), {'color': color}
+        metadata =  {'version': f'{color}_grayscale'}
+        yield np.dstack([data[..., i]] * 3), metadata

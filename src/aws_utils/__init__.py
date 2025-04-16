@@ -2,11 +2,14 @@ from .rds import *
 from .s3 import *
 
 
+# Directory to store uploaded images
+UPLOAD_DIR = 'uploads'
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+
 # Loading and initializing S3 and RDS
-def prepare_aws_clients():
-    load_s3()
+def initialize_aws_clients():
     initialize_s3()
-    load_rds()
     initialize_rds()
 
 
@@ -20,4 +23,6 @@ def write_aws(data, filename, **metadata):
 
 # Saves data to disk as a given filename
 def write_disk(data, filename):
-    pass
+    filename = os.path.join(UPLOAD_DIR, os.path.basename(filename))
+    with open(filename, 'wb') as file:
+        file.write(data)

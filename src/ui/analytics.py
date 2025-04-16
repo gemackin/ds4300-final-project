@@ -1,21 +1,29 @@
-from .. import aws_utils as aws
 import io, numpy as np
 from PIL import Image
 from matplotlib import pyplot as plt
+# Attempting to import beyond top-level package
+import sys, os
+sys.path.append(os.path.abspath('.'))
+import aws_utils as aws # Can't do "from" when uninitialized
 
 
+# Returns the S3 paths of files uploaded
 def get_filenames(version):
     filenames = aws.execute_sql(f"""
-    SELECT filename FROM {aws.TABLE_NAME}
+    SELECT filename, directory
+    FROM {os.environ['RDS_TABLE_NAME']}
     WHERE version = "{version}"
     """)
+    print(filenames) # TESTING
     return filenames
 
 
+# Returns the number of files uploaded
 def get_total_uploads(filenames):
     return len(filenames)
 
 
+# Calculates the RGB histogram bin counts
 def calculate_rgb_values(filenames):
     rgb_values = np.zeros((3, 256))
     for filename in filenames:
@@ -27,6 +35,7 @@ def calculate_rgb_values(filenames):
     return rgb_values
 
 
+# Plots the RGB intensity distributions
 def plot_rgb_histograms(filenames):
     rgb_values = calculate_rgb_values(filenames)
     fig, ax = plt.subplots(3, 1, figsize=(10, 12))

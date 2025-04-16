@@ -56,4 +56,4 @@ def read_input():
         'description': DESCRIPTION,
         'dominant_color': extract_dominant_color(UPLOADED_FILE.name)
     }
-    return UPLOADED_FILE.read()
+    return UPLOADED_FILE.read(), metadata

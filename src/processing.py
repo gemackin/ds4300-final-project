@@ -2,9 +2,13 @@ import io, numpy as np
 from PIL import Image
 
 
+SHAPE = (100, 100)
+
+
 # Preprocesses raw data (in bytes form) for storage
 def preprocess(data):
-    data = np.array(Image.open(io.BytesIO(data)))
+    data = Image.open(io.BytesIO(data))
+    return np.array(data.resize(SHAPE))
 
 
 # Processes preprocessed data for storage

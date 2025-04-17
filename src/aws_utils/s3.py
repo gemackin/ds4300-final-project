@@ -8,7 +8,7 @@ def load_s3():
     AWS_KEYWORDS = {
         'aws_access_key_id': env['AWS_ACCESS_KEY_ID'],
         'aws_secret_access_key': env['AWS_SECRET_ACCESS_KEY'],
-        'region_name': env['S3_REGION_NAME']
+        'region_name': env['AWS_REGION_NAME']
     }
     S3 = boto3.client('s3', **AWS_KEYWORDS)
     BUCKET_NAME = env['S3_BUCKET_NAME']

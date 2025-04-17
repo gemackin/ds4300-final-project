@@ -1,18 +1,16 @@
-import pymysql
+import boto3
 from os import environ as env
 
 
 # Loads the RDS variable into memory
 def load_rds():
-    global CONNECTION, TABLE_NAME
-    CONNECTION = pymysql.connect(
-        host=env['RDS_ENDPOINT_URL'],
-        user=env['RDS_USERNAME'],
-        password=env['RDS_PASSWORD'],
-        database=env['RDS_DATABASE_NAME'],
-        port=3306,
-        cursorclass=pymysql.cursors.DictCursor
-    )
+    global RDS, TABLE_NAME
+    AWS_KEYWORDS = {
+        'aws_access_key_id': env['AWS_ACCESS_KEY_ID'],
+        'aws_secret_access_key': env['AWS_SECRET_ACCESS_KEY'],
+        'region_name': env['RDS_REGION_NAME']
+    }
+    RDS = boto3.client('rds-data', **AWS_KEYWORDS)
     TABLE_NAME = env['RDS_TABLE_NAME']
 
 
@@ -32,9 +30,12 @@ def initialize_rds():
 
 # Executes SQL coding on the RDS database
 def execute_sql(sql):
-    with CONNECTION.cursor() as cursor:
-        cursor.execute(sql)
-        return cursor.fetchall()
+    return RDS.execute_statement(
+        resourceArn=env['RDS_RESOURCE_ARN'],
+        secretArn=env['RDS_SECRET_ARN'],
+        # database=env['RDS_DATABASE_NAME'],
+        sql=sql
+    )
     
 
 # Saves metadata to an RDS database

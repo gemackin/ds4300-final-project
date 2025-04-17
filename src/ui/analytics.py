@@ -27,8 +27,8 @@ def get_total_uploads(filenames):
 def calculate_rgb_values(filenames):
     rgb_values = np.zeros((3, 256))
     for filename in filenames:
+        data = aws.read_s3(filename)
         data = np.array(Image.open(io.BytesIO(data)))
-        data = aws.read_s3()
         for i in range(3):
             values, counts = np.unique(data[..., i], return_counts=True)
             rgb_values[i, values.astype(int)] += counts

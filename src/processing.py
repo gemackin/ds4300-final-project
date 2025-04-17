@@ -12,9 +12,10 @@ def preprocess(data):
 
 
 # Processes preprocessed data for storage
-def process(data):
+def process(data, as_bytes=True):
     # Assuming bytes data (remove this line if already array)
-    data = np.array(Image.open(io.BytesIO(data)))
+    if as_bytes:
+        data = np.array(Image.open(io.BytesIO(data)))
     for i, color in enumerate(('red', 'green', 'blue')):
         metadata =  {'version': f'{color}_grayscale'}
         yield np.dstack([data[..., i]] * 3), metadata

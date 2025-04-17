@@ -1,4 +1,4 @@
-import io, numpy as np
+import io, numpy as np, pandas as pd
 from PIL import Image
 from matplotlib import pyplot as plt
 # Attempting to import beyond top-level package
@@ -9,13 +9,14 @@ import aws_utils as aws # Can't do "from" when uninitialized
 
 # Returns the S3 paths of files uploaded
 def get_filenames(version):
-    filenames = aws.execute_sql(f"""
+    def format_filename(filename, directory, **kws):
+        return os.path.join(directory, filename)
+    response = aws.execute_sql(f"""
     SELECT filename, directory
     FROM {os.environ['RDS_TABLE_NAME']}
-    WHERE version = "{version}"
+    WHERE version = '{version}'
     """)
-    print(filenames) # TESTING
-    return filenames
+    return list(map(lambda x: format_filename(**x), response))
 
 
 # Returns the number of files uploaded
@@ -40,9 +41,12 @@ def plot_rgb_histograms(filenames):
     rgb_values = calculate_rgb_values(filenames)
     fig, ax = plt.subplots(3, 1, figsize=(10, 12))
     for i, color in enumerate(('red', 'green', 'blue')):
-        ax[i].hist(rgb_values[..., i], bins=256, color=color, alpha=0.7)
+        if filenames: # Don't do this if there are no files
+            ax[i].bar(range(256), rgb_values[i], width=1, color=color,
+                      alpha=0.7, edgecolor='k', linewidth=0.2)
         ax[i].set_title(f'{color.title()} Intensity Distribution')
         ax[i].set_xlabel(f'{color.title()} Intensity')
         ax[i].set_ylabel('Frequency')
+        ax[i].set_xlim(0.5, 255.5)
     fig.tight_layout()
     return fig

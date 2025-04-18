@@ -39,7 +39,7 @@ def initialize_rds(create_db=False):
     if create_db:
         print('Creating database')
         create_database(delete_previous=True)
-    print('Loading RDS variables')
+    # print('Loading RDS variables')
     load_rds() # Ensure RDS and TABLE_NAME are loaded
     if not create_db: return
     print('Creating table')

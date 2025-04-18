@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 
 
 # Loads, processes, and uploads input data
-def upload_data(data_raw, metadata, do_processing=True):
+def upload_data(data_raw, metadata, do_processing=False):
     print('Preprocessing', metadata['filename'], end='...\n')
     data_preproc = preprocess(data_raw)
     write_aws(data_preproc, directory='preprocessed', **metadata)
@@ -20,7 +20,7 @@ def upload_data(data_raw, metadata, do_processing=True):
 def update_app():
     if get_submit_button():
         data, metadata = read_input()
-        upload_data(data, metadata, do_processing=False)
+        upload_data(data, metadata, do_processing=True)
     print('Populating analytics...')
     populate_analytics() # Updating analytics
 

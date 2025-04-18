@@ -11,13 +11,13 @@ This repository represents our team's submission for the final project for DS 43
 - Renamed `src/.env.example` to `src/.env` and configured properly
 - Ensure you have the key pair (`keypair.pem`) for EC2 downloaded
 - Python 3 and required libraries installed on EC2
-  - Run `pip install pymysql boto3 numpy pillow streamlit` in the terminal
+  - Run `pip install pymysql boto3 numpy pillow streamlit dotenv` in the terminal
 - Lambda set up (read `src/lambda/README.md` for more)
 
 ## How to Run
 
-1. SSH into the EC2 instance
-    - `ssh -i path/to/keypair.pem ec2-user@<your-instance-IP>`
+1. SSH into the EC2 instance (forwarding port 8501)
+    - `ssh -i path/to/keypair.pem -L 8501:localhost:8501 ec2-user@<your-instance-IP>`
 2. Navigate to the `src/` directory of this repository
     - `cd path/to/ds4300-final-project/src`
 3. Clear the RDS instance (optional)

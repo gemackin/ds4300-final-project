@@ -19,11 +19,11 @@ def write_aws(data, filename, directory=None, version=None, **metadata):
     if version is None: version = directory
     else: directory = os.path.join(directory, version).replace('\\', '/')
     disk_path = os.path.join(UPLOAD_DIR, os.path.basename(filename)).replace('\\', '/')
-    print(f'Saving {filename} to disk...')
+    # print(f'Saving {filename} to disk...')
     write_disk(data, disk_path)
-    print(f'Saving {filename} to S3...')
+    # print(f'Saving {filename} to S3...')
     write_s3(disk_path, directory=directory, delete_original=True)
-    print(f'Writing {filename} to RDS...')
+    # print(f'Writing {filename} to RDS...')
     write_rds(filename=filename, directory=directory, version=version, **metadata)
 
 

@@ -7,8 +7,12 @@ The handler will initiate the processing step, which will then save three additi
 a grayscale for each color component (red, green, and blue).
 These files will be saved into the `processed/` folder within S3.
 
-## How to set up the Lambda
+## How to set up Lambda
 
-1. Upload all the code in this folder into the Lambda
-2. Upload each file from `src/aws_utils/` into the Lambda as well
-3. Rename `__init__.py` from step 2 to `aws_utils.py`
+1. Install `pymysql`, `opencv-python`, and `numpy` in this directory
+    - Run `pip install <library> -t . --no-user` in your local terminal
+    - Since the Lambda doesn't appear to have any libraries pre-installed
+2. Compress the contents of this directory into a `.zip` file
+3. Upload the `.zip` file from step 1 into the Lambda
+4. Upload your configured `src/.env` file into the Lambda
+5. Set up a rule for the Lambda to trigger whenever a file is created in the S3 bucket

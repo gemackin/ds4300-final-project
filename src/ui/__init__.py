@@ -1,4 +1,4 @@
-import streamlit as st, sys
+import streamlit as st
 from .analytics import *
 
 

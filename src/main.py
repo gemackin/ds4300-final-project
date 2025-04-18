@@ -11,7 +11,7 @@ def upload_data(data_raw, metadata, do_processing=True):
     write_aws(data_preproc, directory='preprocessed', **metadata)
     # Processing takes places in a Lambda so we can cut out here
     if not do_processing: return # For debugging, I make it a choice to defer to Lambda
-    print('Processing', metadata['filename'], end='...\n')
+    # print('Processing', metadata['filename'], end='...\n')
     for data_proc, additional_metadata in process(data_preproc, as_bytes=False):
         write_aws(data_proc, directory='processed', **metadata, **additional_metadata)
 
@@ -20,7 +20,7 @@ def upload_data(data_raw, metadata, do_processing=True):
 def update_app():
     if get_submit_button():
         data, metadata = read_input()
-        upload_data(data, metadata, do_processing=True)
+        upload_data(data, metadata, do_processing=False)
     print('Populating analytics...')
     populate_analytics() # Updating analytics
 

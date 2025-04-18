@@ -17,10 +17,10 @@ This repository represents our team's submission for the final project for DS 43
 ## How to Run
 
 1. SSH into the EC2 instance
-  - `ssh -i path/to/keypair.pem ec2-user@<your-instance-IP>`
+    - `ssh -i path/to/keypair.pem ec2-user@<your-instance-IP>`
 2. Navigate to the `src/` directory of this repository
-  - `cd path/to/ds4300-final-project/src`
-3. Initialize and clear the RDS instance
-  - `python reset.py`
+    - `cd path/to/ds4300-final-project/src`
+3. Clear the RDS instance (optional)
+    - `python reset.py`
 4. Run the main script using Streamlit
-  - `streamlit run main.py`
+    - `streamlit run main.py`

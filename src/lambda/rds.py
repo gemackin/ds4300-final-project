@@ -56,6 +56,7 @@ def initialize_rds(create_db=False):
 
 # Executes SQL coding on the RDS database
 def execute_sql(sql):
+    print(sql[:40])
     with CONNECTION.cursor() as cursor:
         cursor.execute(sql)
         return cursor.fetchall()
